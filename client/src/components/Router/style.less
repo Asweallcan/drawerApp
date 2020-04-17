@@ -1,0 +1,17 @@
+@import "../../style/colors.less";
+
+.router {
+  display: flex;
+  height: 100%;
+  border-top: 1px solid @border-color;
+  .route {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    &.active {
+      color: @theme-color;
+    }
+  }
+}
