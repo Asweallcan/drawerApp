@@ -1,0 +1,25 @@
+.loading-container {
+  position: relative;
+  height: 100%;
+  &.loading {
+    .indicator {
+      display: block;
+    }
+    .body {
+      opacity: 0.5;
+    }
+  }
+  .indicator {
+    position: absolute;
+    display: none;
+    z-index: 2;
+    top: 50%;
+    left: 50%;
+    margin-top: -24px;
+    margin-left: -48px;
+  }
+  .body {
+    height: 100%;
+    transition: opacity ease-out 0.5s;
+  }
+}

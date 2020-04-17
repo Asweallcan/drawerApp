@@ -4,14 +4,14 @@ import "./style/index.less";
 
 class App extends Component {
   config: Config = {
-    pages: ["pages/Clock/index"],
+    pages: ["pages/Clock/index", "pages/Square/index", "pages/Course/index"],
     window: {
       backgroundTextStyle: "light",
       navigationBarBackgroundColor: "#fa897b",
-      navigationBarTitleText: "WeChat",
-      navigationBarTextStyle: "black",
+      navigationBarTitleText: "手绘素材教程",
+      navigationBarTextStyle: "black"
     },
-    cloud: true,
+    cloud: true
   };
 
   componentDidMount() {

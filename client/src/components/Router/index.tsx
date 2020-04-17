@@ -1,37 +1,14 @@
 import Taro, { Component } from "@tarojs/taro";
 import { View } from "@tarojs/components";
 import { AtIcon } from "taro-ui";
+import pages from "../../router.json";
 import "./style.less";
 
-export type Page = "clock" | "square" | "course";
+export type Page = keyof typeof pages;
 
 interface Props {
   currentPage?: Page;
 }
-
-const pages = [
-  {
-    key: "clock",
-    name: "打卡",
-    icon: "icon-heart",
-    size: 18,
-    path: "pages/Clock/index"
-  },
-  {
-    key: "square",
-    name: "广场",
-    icon: "icon-voice",
-    size: 20,
-    path: "pages/Squre/index"
-  },
-  {
-    key: "course",
-    name: "教程",
-    icon: "shouhuiban",
-    size: 24,
-    path: "pages/Course/index"
-  }
-];
 
 class Router extends Component<Props> {
   onRouteClick = (key, path) => {
@@ -39,7 +16,7 @@ class Router extends Component<Props> {
     if (key === currentPage) {
       return;
     }
-    Taro.navigateTo({
+    Taro.redirectTo({
       url: path
     });
   };
@@ -49,12 +26,13 @@ class Router extends Component<Props> {
 
     return (
       <View className="router">
-        {pages.map(page => {
-          const { key, name, path, icon, size } = page;
+        {Object.keys(pages).map(key => {
+          const { name, path, icon, size } = pages[key];
+          const isActive = currentPage === key;
           return (
             <View
               key={key}
-              className={`route ${currentPage === key ? "active" : ""}`}
+              className={`route ${isActive ? "active" : ""}`}
               onClick={() => this.onRouteClick(key, path)}
             >
               <AtIcon prefixClass="icon" value={icon} size={size} />

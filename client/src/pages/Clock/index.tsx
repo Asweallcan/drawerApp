@@ -1,25 +1,32 @@
-import Taro, { Component, Config } from "@tarojs/taro";
+import Taro, { Component } from "@tarojs/taro";
 import { Layout } from "../../components";
 import "./style.less";
 
-export default class Index extends Component {
-  config: Config = {
-    navigationBarTitleText: "手绘素材教程库"
+interface Props {}
+
+interface State {
+  loading: boolean;
+}
+
+class Clock extends Component<Props, State> {
+  state = {
+    loading: false
   };
 
-  componentWillMount() {}
-
-  componentDidMount() {}
-
-  componentWillUnmount() {}
-
-  componentDidShow() {}
-
-  componentDidHide() {}
+  componentDidMount() {
+    wx.showShareMenu({
+      withTicket: true
+    });
+  }
 
   render() {
-    return <Layout currentPage="clock">
-      asd
-    </Layout>;
+    const { loading } = this.state;
+    return (
+      <Layout currentPage="clock" loading={loading}>
+        clock
+      </Layout>
+    );
   }
 }
+
+export default Clock;
