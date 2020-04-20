@@ -1,0 +1,14 @@
+{
+  "Clock": {
+    "name": "打卡",
+    "icon": "icon-heart"
+  },
+  "Square": {
+    "name": "广场",
+    "icon": "icon-voice"
+  },
+  "Course": {
+    "name": "教程",
+    "icon": "shouhuiban"
+  }
+}

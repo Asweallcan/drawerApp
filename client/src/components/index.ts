@@ -1,2 +1,3 @@
-export { default as Router } from "./Router";
-export { default as Layout } from "./Layout";
+export { default as Tabs } from "./Tabs";
+export { default as Tabpane } from "./Tabpane";
+export { default as Loading } from "./Loading";
