@@ -1,0 +1,20 @@
+.form-item {
+  position: relative;
+  margin-bottom: 48px;
+  &.required {
+    .form-item-title {
+      margin-left: 20px;
+    }
+    &::before {
+      position: absolute;
+      display: block;
+      content: "*";
+      color: #f00;
+      left: 0;
+      top: 0;
+    }
+  }
+  .form-item-title {
+    margin-bottom: 24px;
+  }
+}

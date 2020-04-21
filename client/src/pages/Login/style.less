@@ -1,22 +1,30 @@
 @import "../../style/colors.less";
 
-.login {
+.page-login {
   display: flex;
   width: 100%;
   height: 100vh;
   justify-content: center;
   align-items: center;
-  .login-btn {
+  .btn-group {
     display: flex;
-    width: 80%;
-    height: 80px;
-    justify-content: center;
-    align-items: center;
-    background-color: @wx-theme-color;
-    font-size: 28px;
-    color: #fff;
-    at-icon {
-      margin-right: 12px;
+    flex-direction: column;
+    width: 90%;
+    .btn {
+      display: flex;
+      width: 100%;
+      height: 80px;
+      justify-content: center;
+      align-items: center;
+      font-size: 28px;
+      margin-top: 24px;
+    }
+    .login-btn {
+      background-color: @wx-theme-color;
+      color: #fff;
+      at-icon {
+        margin-right: 12px;
+      }
     }
   }
 }

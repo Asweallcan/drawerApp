@@ -3,7 +3,7 @@ import "./style/index.less";
 
 class App extends Component {
   config: Config = {
-    pages: ["pages/Home/index", "pages/Login/index"],
+    pages: ["pages/Home/index", "pages/Login/index", "pages/Attendance/index"],
     window: {
       backgroundTextStyle: "light",
       navigationBarBackgroundColor: "#fa897b",
@@ -15,7 +15,10 @@ class App extends Component {
 
   componentDidMount() {
     if (process.env.TARO_ENV === "weapp") {
-      Taro.cloud.init();
+      Taro.cloud.init({
+        env: "drawer-app-gwhj1",
+        traceUser: true
+      });
     }
   }
 
