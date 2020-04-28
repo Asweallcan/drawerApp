@@ -1,6 +1,6 @@
 {
 	"miniprogramRoot": "client/dist/",
-	"cloudfunctionRoot": "cloud/functions",
+	"cloudfunctionRoot": "cloud/functions/",
 	"projectname": "drawerApp",
 	"description": "drawerApp",
 	"appid": "wxba138d8f873cfd3b",

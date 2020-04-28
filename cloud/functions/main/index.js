@@ -12,7 +12,9 @@ exports.main = async (event, context) => {
   });
 
   app.router("user/register", controllers.user.register);
-  app.router("attendance/isAttended", controllers.attendance.isAttended);
+  app.router("user/selfInfo", controllers.user.selfInfo);
+  app.router("attendance/attend", controllers.attendance.attend);
+  app.router("attendance/history", controllers.attendance.history);
 
   return app.serve();
 };

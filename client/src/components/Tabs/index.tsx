@@ -1,13 +1,14 @@
 import Taro, { Component } from "@tarojs/taro";
 import { View } from "@tarojs/components";
-import { AtIcon } from "taro-ui";
+import { IconFont } from "@/components";
+import colors from "@/style/constants";
 
 import "./style.less";
 
 interface Props {
   activeKey: string;
   setActiveKey: any;
-  iconSize: number;
+  iconSize?: number;
   tabs: {
     [key: string]: {
       name: string;
@@ -41,7 +42,11 @@ class Tabs extends Component<Props> {
                   setActiveKey(tabKey);
                 }}
               >
-                <AtIcon prefixClass="icon" value={icon} size={iconSize} />
+                <IconFont
+                  name={icon as any}
+                  size={iconSize || 60}
+                  color={activeKey === tabKey ? colors.THEME_COLOR : "#000"}
+                />
                 <View className="tab-name">{name}</View>
               </View>
             );

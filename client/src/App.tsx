@@ -3,7 +3,7 @@ import "./style/index.less";
 
 class App extends Component {
   config: Config = {
-    pages: ["pages/Home/index", "pages/Login/index", "pages/Attendance/index"],
+    pages: ["pages/Home/index", "pages/Attendance/index", "pages/Login/index"],
     window: {
       backgroundTextStyle: "light",
       navigationBarBackgroundColor: "#fa897b",

@@ -41,6 +41,7 @@
     "@tarojs/taro-tt": "2.1.3",
     "@tarojs/taro-weapp": "2.1.3",
     "babel-runtime": "^6.26.0",
+    "moment": "^2.24.0",
     "nerv-devtools": "^1.5.5",
     "nervjs": "^1.5.5",
     "regenerator-runtime": "0.11.1",
@@ -66,6 +67,7 @@
     "eslint-plugin-react": "^7.8.2",
     "eslint-plugin-react-hooks": "^1.6.1",
     "eslint-plugin-taro": "2.1.3",
+    "taro-iconfont-cli": "^2.0.0",
     "typescript": "^3.0.1"
   }
 }

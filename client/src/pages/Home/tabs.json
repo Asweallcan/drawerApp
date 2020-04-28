@@ -1,14 +1,10 @@
 {
   "Attendance": {
-    "name": "打卡",
-    "icon": "icon-heart"
+    "name": "首页",
+    "icon": "shouye"
   },
   "Square": {
     "name": "广场",
-    "icon": "icon-voice"
-  },
-  "Course": {
-    "name": "教程",
-    "icon": "shouhuiban"
+    "icon": "quanjingzhanshi"
   }
 }

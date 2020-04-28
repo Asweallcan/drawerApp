@@ -1,8 +1,8 @@
 import Taro, { Component, Config } from "@tarojs/taro";
 import { View, Button } from "@tarojs/components";
-import { AtIcon } from "taro-ui";
 import { request } from "@/utils";
 import { BACKEND_ERROR } from "@/constants";
+import { IconFont } from "@/components";
 
 import "./style.less";
 
@@ -11,9 +11,12 @@ class Login extends Component {
     navigationBarBackgroundColor: "#fff"
   };
 
-  onGetUserInfo = async () => {
+  onGetUserInfo = async ({ detail: { userInfo } }) => {
     try {
-      await request("user/register");
+      Taro.showLoading({
+        title: "加载中"
+      });
+      await request("user/register", userInfo);
       Taro.showToast({
         title: "登陆成功"
       });
@@ -24,6 +27,8 @@ class Login extends Component {
         title: BACKEND_ERROR,
         icon: "none"
       });
+    } finally {
+      Taro.hideLoading();
     }
   };
 
@@ -36,7 +41,7 @@ class Login extends Component {
             openType="getUserInfo"
             onGetUserInfo={this.onGetUserInfo}
           >
-            <AtIcon prefixClass="icon" value="weixin" size={18} />
+            <IconFont name="weixin" size={40} color="#fff" />
             一键登录
           </Button>
           <Button

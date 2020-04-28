@@ -1,0 +1,9 @@
+{
+  "symbol_url": "http://at.alicdn.com/t/font_1762918_ct05jact2pp.js",
+  "save_dir": "./src/components/IconFont",
+  "use_typescript": true,
+  "platforms": ["weapp"],
+  "use_rpx": true,
+  "trim_icon_prefix": "icon",
+  "default_icon_size": 18
+}

@@ -1,0 +1,26 @@
+@import "../../../../style/colors.less";
+
+.tab-attendance {
+  height: 100%;
+  .new-attendance {
+    position: relative;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    margin-bottom: 48px;
+
+    .new-attendance-btn-text {
+      font-size: 40px;
+      font-weight: 600;
+      background-color: @theme-color;
+      border-radius: 40px;
+      padding: 10px 30px;
+      transform-origin: 50% 50%;
+      &.clicked {
+        transform: scale(0.9);
+      }
+    }
+  }
+}

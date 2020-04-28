@@ -1,7 +1,7 @@
-import Taro from "@tarojs/taro";
+import Taro, { UserInfo } from "@tarojs/taro";
 
 const getUserInfo = () => {
-  return new Promise((resolve, reject) => {
+  return new Promise<UserInfo>((resolve, reject) => {
     Taro.getSetting({
       success: settings => {
         if (!settings.authSetting["scope.userInfo"]) {
@@ -11,7 +11,7 @@ const getUserInfo = () => {
         } else {
           Taro.getUserInfo({
             success: info => {
-              resolve(info);
+              resolve(info.userInfo);
             },
             fail: () => {
               reject();

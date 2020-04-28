@@ -1,41 +1,37 @@
 const cloud = require("wx-server-sdk");
-const response = require("../../utils/response.js");
+const { response, log, getRequestData } = require("../../utils");
+const { User } = require("../../models");
 
 module.exports = async (ctx, next) => {
+  let transaction;
   try {
     const db = cloud.database();
+    transaction = await db.startTransaction();
+
+    const data = getRequestData(ctx);
     const { OPENID } = cloud.getWXContext();
-    cloud.logger().info({
-      openId: OPENID,
-    });
-    const res = await db.collection("Users").where({
-      _openId: OPENID,
-    });
-    const { data } = res;
-    if (!data) {
-      db.collection("Users").add({
+
+    const { data: users } = await db
+      .collection(User.__TABLE__)
+      .where({
+        openId: OPENID,
+      })
+      .get();
+
+    if (!users || !users.length)
+      await transaction.collection(User.__TABLE__).add({
         data: {
-          _openId: OPENID,
-          attendanceIds: [],
-          attendanceCount: 0,
-          lastAttendanceDate: null,
+          ...User(data),
+          openId: OPENID,
         },
       });
-    }
-    ctx.body = response({
-      message: "",
-      code: 0,
-      data: null,
-    });
+
+    await transaction.commit();
+    ctx.body = response();
   } catch (err) {
-    cloud.logger().info({
-      message: err,
-    });
-    ctx.body = response({
-      message: err,
-      code: -1,
-      data: null,
-    });
+    if (transaction) transaction.rollback();
+    log.error({ message: err });
+    ctx.body = response.Error(err);
   }
 
   await next(); // 执行下一中间件

@@ -1,5 +1,7 @@
-const isAttended = require("./isAttended");
+const attend = require("./attend");
+const history = require("./history");
 
 module.exports = {
-  isAttended,
+  attend,
+  history,
 };
