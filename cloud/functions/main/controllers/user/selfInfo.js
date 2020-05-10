@@ -1,6 +1,6 @@
 const cloud = require("wx-server-sdk");
 const moment = require("moment");
-const { response, log } = require("../../utils");
+const { response } = require("../../utils");
 const { User } = require("../../models");
 
 module.exports = async (ctx, next) => {
@@ -18,16 +18,17 @@ module.exports = async (ctx, next) => {
     const { lastAttendDate } = user;
 
     const attended =
-      lastAttendDate && moment().diff(lastAttendDate || undefined, "days") < 1;
+      lastAttendDate &&
+      moment(moment().format("YYYY-MM-DD")).diff(
+        moment(moment(lastAttendDate).format("YYYY-MM-DD")),
+        "days"
+      ) < 1;
 
     ctx.body = response({
-      data: { ...user, attended },
+      data: { ...user, attended: false },
     });
   } catch (err) {
-    log.error({
-      message: err,
-    });
-    ctx.body = response.Error(err);
+    throw err;
   }
 
   await next();

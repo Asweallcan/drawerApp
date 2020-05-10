@@ -1,5 +1,5 @@
 import Taro, { Component } from "@tarojs/taro";
-import { Tabs, Tabpane } from "../../components";
+import { Tabs, Tabpane } from "./components";
 import { Attendance, Square } from "./Tabs";
 import tabs from "./tabs.json";
 import "./style.less";
@@ -27,10 +27,10 @@ class Home extends Component<Props, State> {
         setActiveKey={activeKey => this.setState({ activeKey })}
       >
         <Tabpane tab="Attendance" activeKey={activeKey}>
-          <Attendance></Attendance>
+          <Attendance />
         </Tabpane>
         <Tabpane tab="Square" activeKey={activeKey}>
-          <Square></Square>
+          <Square tab="Square" activeKey={activeKey} />
         </Tabpane>
       </Tabs>
     );

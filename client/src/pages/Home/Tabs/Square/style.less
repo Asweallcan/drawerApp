@@ -1,0 +1,35 @@
+@import "../../../../style/colors.less";
+
+.tab-sqaure {
+  height: 100%;
+  .choose-type {
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid @border-color;
+    padding: 12px 0;
+    .tab {
+      position: relative;
+      margin-left: 24px;
+      transition: all ease-out 0.3s;
+      &::after {
+        display: block;
+        content: " ";
+        position: absolute;
+        left: 0;
+        bottom: -13px;
+        width: 0;
+        height: 4px;
+        background-color: @theme-color;
+      }
+      &.active {
+        color: @theme-color;
+        &::after {
+          width: 100%;
+        }
+      }
+    }
+  }
+  .list {
+    height: calc(100% - 68px);
+  }
+}

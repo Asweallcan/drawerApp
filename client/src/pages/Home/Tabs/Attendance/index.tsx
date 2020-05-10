@@ -2,8 +2,8 @@ import Taro, { Component } from "@tarojs/taro";
 import { View, ScrollView } from "@tarojs/components";
 import { request } from "@/utils";
 import { BACKEND_ERROR } from "@/constants";
-import { SelfInfoResp, AttendanceHistoryResp } from "@/typings";
-import { IconFont, Divider, Blank, ListItem } from "@/components";
+import { SelfInfoResp, PostHistoryResp } from "@/typings";
+import { IconFont, Divider, PostListItem, Wrapper } from "@/components";
 import SelfInfo from "./components/SelfInfo";
 
 import "./style.less";
@@ -12,16 +12,20 @@ interface Props {}
 
 interface State {
   selfInfo: SelfInfoResp;
-  attendanceHistory: AttendanceHistoryResp;
+  postHistory: PostHistoryResp;
 }
 
 class Attendance extends Component<Props, State> {
   state = {
     selfInfo: {} as SelfInfoResp,
-    attendanceHistory: [] as AttendanceHistoryResp
+    postHistory: [] as PostHistoryResp
   };
 
   async componentDidShow() {
+    this.fetchData();
+  }
+
+  fetchData = async () => {
     try {
       Taro.showLoading({
         title: "加载中"
@@ -37,8 +41,9 @@ class Attendance extends Component<Props, State> {
       });
     } finally {
       Taro.hideLoading();
+      Taro.stopPullDownRefresh();
     }
-  }
+  };
 
   toAttend = async () => {
     const settings = await Taro.getSetting();
@@ -67,16 +72,14 @@ class Attendance extends Component<Props, State> {
   };
 
   getAttendanceHistory = async () => {
-    const attendanceHistory = await request<AttendanceHistoryResp>(
-      "attendance/history"
-    );
+    const postHistory = await request<PostHistoryResp>("post/history");
     this.setState({
-      attendanceHistory
+      postHistory
     });
   };
 
   render() {
-    const { selfInfo, attendanceHistory } = this.state;
+    const { selfInfo, postHistory } = this.state;
 
     const { attended, continuousAttendCount } = selfInfo;
 
@@ -85,50 +88,59 @@ class Attendance extends Component<Props, State> {
         className="tab-attendance"
         enableBackToTop
         refresherEnabled
+        scrollWithAnimation
         refresherDefaultStyle="black"
-        refresherTriggered={true}
+        onRefresherRefresh={() => this.fetchData()}
+        scrollY
       >
-        <SelfInfo selfInfo={selfInfo} />
-        <Divider>打卡</Divider>
-        <View className="new-attendance">
-          <View className="new-attendance-icon">
-            <IconFont name="bizuhe" size={200} />
+        <Wrapper>
+          <SelfInfo selfInfo={selfInfo} my-class="self-info" />
+          <Divider>打卡</Divider>
+          <View className="new-attendance">
+            <View className="new-attendance-icon">
+              <IconFont name="bizuhe" size={200} />
+            </View>
+            {attended ? (
+              <View className="new-attendance-info">
+                今日已打卡
+                {continuousAttendCount > 1
+                  ? `，连续打卡${continuousAttendCount}天，请继续努力哦`
+                  : "，去广场看看吧"}
+              </View>
+            ) : (
+              <View
+                className="new-attendance-btn-text"
+                hoverClass="clicked"
+                onClick={this.toAttend}
+              >
+                每天进步
+              </View>
+            )}
           </View>
-          {attended ? (
-            <View className="new-attendance-info">
-              今日已打卡~
-              {continuousAttendCount > 0
-                ? `，连续打卡${continuousAttendCount}天，请继续努力哦`
-                : ""}
+          {postHistory.length > 0 ? (
+            <View>
+              <Divider>记录</Divider>
+              <View className="attendance-history">
+                {postHistory.map(record => {
+                  const { title, file, date, _id, isPublic } = record;
+                  return (
+                    <PostListItem
+                      title={title}
+                      file={file}
+                      date={date}
+                      isPublic={isPublic}
+                      onClick={() => {
+                        Taro.navigateTo({
+                          url: `/pages/PostDetail/index?id=${_id}`
+                        });
+                      }}
+                    />
+                  );
+                })}
+              </View>
             </View>
-          ) : (
-            <View
-              className="new-attendance-btn-text"
-              hoverClass="clicked"
-              onClick={this.toAttend}
-            >
-              每天进步
-            </View>
-          )}
-        </View>
-        <Divider>记录</Divider>
-        <View className="attendance-history">
-          {attendanceHistory.length ? (
-            attendanceHistory.map(record => {
-              const { title, file, date } = record;
-              return (
-                <ListItem
-                  title={title}
-                  file={file}
-                  date={date}
-                  onClick={() => {}}
-                />
-              );
-            })
-          ) : (
-            <Blank />
-          )}
-        </View>
+          ) : null}
+        </Wrapper>
       </ScrollView>
     );
   }

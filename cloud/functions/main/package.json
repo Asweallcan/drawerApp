@@ -9,6 +9,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "lodash": "^4.17.15",
     "moment": "^2.24.0",
     "tcb-router": "^1.1.2",
     "wx-server-sdk": "~1.8.3"

@@ -1,0 +1,115 @@
+@import "../../style/colors.less";
+
+.page-post-detail {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  font-size: 28px;
+  .post-detail {
+    display: flex;
+    .avatar {
+      width: 80px;
+      height: 80px;
+      margin-top: 4px;
+      border-radius: 12px;
+    }
+    .detail {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      justify-content: center;
+      margin-left: 24px;
+      flex: 1;
+      .nickName {
+        color: @theme-color;
+      }
+      .title {
+        margin-top: 12px;
+      }
+      .file {
+        width: 400px;
+        margin-top: 12px;
+      }
+      .date-n-action {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 12px;
+        color: @second-grey;
+        width: 100%;
+        .date {
+          font-size: 24px;
+        }
+        .action-btn {
+          padding: 0 4px;
+          background-color: @content-bg;
+          border-radius: 4px;
+          position: relative;
+          overflow: visible;
+          .actions {
+            border-radius: 12px;
+            padding: 12px;
+            position: absolute;
+            left: -6px;
+            top: -16px;
+            transform: translate(-100%, 0);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: rgb(79, 80, 82);
+            color: #fff;
+            z-index: 3;
+            width: 0;
+            transition: width ease-out 0.3s;
+            &.show {
+              width: unset;
+            }
+            .action {
+              display: flex;
+              align-items: center;
+              white-space: nowrap;
+              .text {
+                margin-left: 8px;
+              }
+              &:first-child {
+                margin-right: 12px;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+  .social {
+    margin-top: 24px;
+    background-color: @content-bg;
+    border-radius: 12px;
+    padding: 12px 24px;
+    .stars {
+      display: flex;
+      align-items: flex-start;
+      .icon {
+        display: flex;
+        align-items: center;
+        height: 50px;
+        margin-right: 24px;
+      }
+      .list {
+        display: flex;
+        align-content: flex-start;
+        flex-wrap: wrap;
+        .user {
+          margin-right: 12px;
+          .avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 12px;
+          }
+        }
+      }
+    }
+    .comments {
+      display: flex;
+      align-items: center;
+    }
+  }
+}

@@ -1,7 +1,13 @@
 const User = require("./user.js");
-const Attendance = require("./attendance.js");
+const Post = require("./post.js");
+const Comment = require("./comment");
+const Star = require("./star");
+const Message = require("./message");
 
 module.exports = {
   User,
-  Attendance,
+  Post,
+  Comment,
+  Star,
+  Message,
 };

@@ -1,6 +1,6 @@
 import Taro, { Component } from "@tarojs/taro";
-import { View, Input, Image, Button } from "@tarojs/components";
-import { FormItem, IconFont } from "@/components";
+import { View, Input, Image, Button, Text, Switch } from "@tarojs/components";
+import { FormItem, IconFont, Wrapper } from "@/components";
 import colors from "@/style/constants";
 import { getUserInfo, uuid, request } from "@/utils";
 
@@ -11,6 +11,7 @@ interface Props {}
 interface State {
   title: string;
   file: string;
+  isPublic: boolean;
   errors: {
     title: boolean;
     file: boolean;
@@ -21,6 +22,7 @@ class Attendance extends Component<Props, State> {
   state = {
     title: "",
     file: "",
+    isPublic: true,
     errors: {
       title: false,
       file: false
@@ -109,10 +111,14 @@ class Attendance extends Component<Props, State> {
       return;
     }
     try {
-      const { title } = this.state;
+      Taro.showLoading({
+        title: "加载中"
+      });
+      const { title, isPublic } = this.state;
       await this.uploadImage();
-      await request("attendance/attend", {
+      await request("post/attend", {
         title,
+        isPublic,
         file: this.fileID
       });
       Taro.showToast({
@@ -127,47 +133,72 @@ class Attendance extends Component<Props, State> {
         title: err,
         icon: "none"
       });
+    } finally {
+      Taro.hideLoading();
     }
   };
 
   render() {
-    const { file, errors } = this.state;
+    const { isPublic, file, errors } = this.state;
 
     return (
       <View className="page-attendance">
-        <FormItem required title="标题" error={errors.title}>
-          <Input
-            id="title"
-            className="title-input"
-            onInput={e =>
-              this.setState({
-                title: e.detail.value
-              })
-            }
-            placeholder="请输入今日份的打卡内容哦~"
-          />
-        </FormItem>
-        <FormItem required title="创作" error={errors.file}>
-          <View className="imgs">
-            {file ? (
-              <View className="img choosen" onClick={this.previewImage}>
-                <Image src={file} mode="aspectFill" />
-                <View className="delete" onClick={this.onDeleteImage}>
-                  <IconFont name="shanchu" size={30} color="#DC143C" />
+        <Wrapper>
+          <FormItem required title="标题" error={errors.title}>
+            <Input
+              id="title"
+              className="title-input"
+              onInput={e =>
+                this.setState({
+                  title: e.detail.value
+                })
+              }
+              placeholder="请输入今日份的打卡内容哦~"
+            />
+          </FormItem>
+          <FormItem required title="创作" error={errors.file}>
+            <View className="imgs">
+              {file ? (
+                <View className="img choosen" onClick={this.previewImage}>
+                  <Image src={file} mode="aspectFill" />
+                  <View className="delete" onClick={this.onDeleteImage}>
+                    <IconFont name="shanchu" size={30} color="#DC143C" />
+                  </View>
                 </View>
-              </View>
-            ) : (
-              <View className="img add" onClick={this.onChooseImage}>
-                <IconFont name="tianjia" color={colors.BLANK_COLOR} size={40} />
-              </View>
-            )}
+              ) : (
+                <View className="img add" onClick={this.onChooseImage}>
+                  <IconFont
+                    name="tianjia"
+                    color={colors.SECOND_GREY}
+                    size={60}
+                  />
+                </View>
+              )}
+            </View>
+          </FormItem>
+          <FormItem required title="公开">
+            <View className="public">
+              <Switch
+                checked={isPublic}
+                color={colors.THEME_COLOR}
+                style={{
+                  zoom: 0.7
+                }}
+                onChange={e => {
+                  this.setState({
+                    isPublic: e.detail.value
+                  });
+                }}
+              />
+              <Text>{isPublic ? "发布至广场，所有人可见" : "仅自己可见"}</Text>
+            </View>
+          </FormItem>
+          <View className="action-area">
+            <Button className="btn submit-btn" onClick={this.onSubmit}>
+              提交
+            </Button>
           </View>
-        </FormItem>
-        <View className="action-area">
-          <Button className="btn submit-btn" onClick={this.onSubmit}>
-            提交
-          </Button>
-        </View>
+        </Wrapper>
       </View>
     );
   }

@@ -11,8 +11,9 @@ interface Props {
 class Tabpane extends Component<Props> {
   render() {
     const { children, tab, activeKey } = this.props;
+
     return (
-      <View className={`tabpane ${tab === activeKey ? "active" : ""}`}>
+      <View className={`tabpane ${activeKey === tab ? "active" : ""}`}>
         {children}
       </View>
     );

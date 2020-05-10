@@ -1,6 +1,6 @@
 Component({
   properties: {
-    // icon-test | quanjingzhanshi | shouye | yipiankongbaidedouding | bizuhe | dianzan | shanchu | tianjia | weixin
+    // more | jiazai | pinglun | icon-test | quanjingzhanshi | shouye | yipiankongbaidedouding | bizuhe | dianzan | shanchu | tianjia | weixin
     name: {
       type: String,
     },

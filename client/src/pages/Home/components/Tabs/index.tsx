@@ -26,11 +26,21 @@ class Tabs extends Component<Props> {
       children,
       setActiveKey
     } = this.props;
+
     const tabKeys = Object.keys(tabs);
+    const currentIndex = tabKeys.indexOf(activeKey);
 
     return (
       <View className="tabs">
-        <View className="body">{children}</View>
+        <View
+          className="body"
+          style={{
+            width: `${tabKeys.length * 100}vw`,
+            transform: `translate(-${currentIndex * 100}vw, 0)`
+          }}
+        >
+          {children}
+        </View>
         <View className="footer">
           {tabKeys.map(tabKey => {
             const { icon, name } = tabs[tabKey];

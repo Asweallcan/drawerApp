@@ -1,0 +1,53 @@
+@import "../../../../style/colors.less";
+
+.tabs {
+  position: relative;
+  height: 100vh;
+  width: 100vw;
+  .body {
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    transition: transform ease-in 0.2s;
+  }
+  .footer {
+    width: 100%;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    height: 120px;
+    display: flex;
+    align-items: center;
+    border-top: 1px solid @border-color;
+    z-index: 1;
+    background-color: #fff;
+    .tab-item {
+      position: relative;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      &::after {
+        position: absolute;
+        display: block;
+        content: " ";
+        left: 50%;
+        transform: translate(-50%, 0);
+        width: 0px;
+        height: 0px;
+        background-color: @theme-color;
+        opacity: 0.2;
+        border-radius: 50%;
+        transition: all ease-out 0.2s;
+      }
+      &.active {
+        color: @theme-color;
+        &::after {
+          width: 120px;
+          height: 120px;
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,22 @@
+@import "../../style/colors.less";
+
+.custom-image {
+  position: relative;
+  background-color: @first-grey;
+  display: flex;
+  align-items: center;
+  &::after {
+    display: none;
+  }
+  &.blank {
+    &::after {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      content: " ！";
+      color: @second-grey;
+      font-size: 40px;
+      transform: translate(-8px, -24px);
+    }
+  }
+}

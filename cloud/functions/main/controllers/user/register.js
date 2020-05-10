@@ -1,5 +1,5 @@
 const cloud = require("wx-server-sdk");
-const { response, log, getRequestData } = require("../../utils");
+const { response, getRequestData } = require("../../utils");
 const { User } = require("../../models");
 
 module.exports = async (ctx, next) => {
@@ -20,18 +20,14 @@ module.exports = async (ctx, next) => {
 
     if (!users || !users.length)
       await transaction.collection(User.__TABLE__).add({
-        data: {
-          ...User(data),
-          openId: OPENID,
-        },
+        data: User({ ...data, openId: OPENID }),
       });
 
     await transaction.commit();
     ctx.body = response();
   } catch (err) {
     if (transaction) transaction.rollback();
-    log.error({ message: err });
-    ctx.body = response.Error(err);
+    throw err;
   }
 
   await next(); // 执行下一中间件

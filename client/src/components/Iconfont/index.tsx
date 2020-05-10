@@ -4,7 +4,7 @@
 import { FunctionComponent } from '@tarojs/taro';
 
 interface Props {
-  name: 'icon-test' | 'quanjingzhanshi' | 'shouye' | 'yipiankongbaidedouding' | 'bizuhe' | 'dianzan' | 'shanchu' | 'tianjia' | 'weixin';
+  name: 'more' | 'jiazai' | 'pinglun' | 'icon-test' | 'quanjingzhanshi' | 'shouye' | 'yipiankongbaidedouding' | 'bizuhe' | 'dianzan' | 'shanchu' | 'tianjia' | 'weixin';
   size?: number;
   color?: string | string[];
 }

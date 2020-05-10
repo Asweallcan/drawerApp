@@ -1,7 +1,7 @@
 import Taro, { Component } from "@tarojs/taro";
-import { View, Image } from "@tarojs/components";
+import { View } from "@tarojs/components";
 import { SelfInfoResp } from "@/typings";
-import { IconFont } from "@/components";
+import { IconFont, CustomImage } from "@/components";
 
 import "./style.less";
 
@@ -10,15 +10,17 @@ interface Props {
 }
 
 class SelfInfo extends Component<Props> {
+  static externalClasses = ["my-class"];
+
   render() {
     const { selfInfo = {} as SelfInfoResp } = this.props;
     const {
       avatarUrl,
       nickName = "暂未登录",
-      postIds,
       followIds,
       followerIds,
-      starIds,
+      commentIds,
+      staredIds,
       messages
     } = selfInfo;
 
@@ -26,16 +28,14 @@ class SelfInfo extends Component<Props> {
 
     return (
       <View
-        className="self-info"
+        className="my-class self-info"
         onClick={
           avatarUrl
             ? undefined
-            : () => {
-                Taro.navigateTo({ url: "/pages/Login/index" });
-              }
+            : () => Taro.navigateTo({ url: "/pages/Login/index" })
         }
       >
-        <Image src={avatarUrl} className="avatar" />
+        <CustomImage src={avatarUrl} my-class="avatar" />
         <View className="social">
           <View className="top">
             <View className="nickName">{nickName}</View>
@@ -52,10 +52,6 @@ class SelfInfo extends Component<Props> {
           </View>
           <View className="bottom">
             <View className="block" hoverClass="clicked">
-              <View className="title">发布</View>
-              <View className="num">{postIds.length || 0}</View>
-            </View>
-            <View className="block" hoverClass="clicked">
               <View className="title">已关注</View>
               <View className="num">{followIds.length || 0}</View>
             </View>
@@ -65,7 +61,11 @@ class SelfInfo extends Component<Props> {
             </View>
             <View className="block" hoverClass="clicked">
               <View className="title">获赞</View>
-              <View className="num">{starIds.length || 0}</View>
+              <View className="num">{staredIds.length || 0}</View>
+            </View>
+            <View className="block" hoverClass="clicked">
+              <View className="title">评论</View>
+              <View className="num">{commentIds.length || 0}</View>
             </View>
           </View>
         </View>

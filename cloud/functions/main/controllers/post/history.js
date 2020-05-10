@@ -1,7 +1,6 @@
 const cloud = require("wx-server-sdk");
-const moment = require("moment");
-const { response, log } = require("../../utils");
-const { User, Attendance } = require("../../models");
+const { response } = require("../../utils");
+const { User, Post } = require("../../models");
 
 module.exports = async (ctx, next) => {
   try {
@@ -16,12 +15,19 @@ module.exports = async (ctx, next) => {
       })
       .get();
 
-    const { attendanceIds } = User(users[0]);
+    const { postIds } = User(users[0]);
 
     const { data: attendances } = await db
-      .collection(Attendance.__TABLE__)
+      .collection(Post.__TABLE__)
+      .field({
+        title: true,
+        file: true,
+        date: true,
+        isPublic: true,
+      })
       .where({
-        _id: _.in(attendanceIds),
+        _id: _.in(postIds),
+        isAttendance: true,
       })
       .get();
 
@@ -29,8 +35,7 @@ module.exports = async (ctx, next) => {
       data: attendances,
     });
   } catch (err) {
-    log.error({ message: err });
-    ctx.body = response.Error(err);
+    throw err;
   }
 
   await next();
